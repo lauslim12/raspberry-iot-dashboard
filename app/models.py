@@ -64,4 +64,6 @@ class Link:
         redis_pipeline.multi()
 
         # delete one data
-        redis_pipeline.hdel(f"link:{id}")
+        redis_pipeline.delete(f"link:{id}")
+        redis_pipeline.zrem("links", id)
+        redis_pipeline.execute()
