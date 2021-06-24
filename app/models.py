@@ -29,7 +29,11 @@ class Link:
         return links
 
     @staticmethod
-    def create_link(new_link: Link) -> dict[str, Any]:
+    def get_one_link(id: str) -> dict[str, Any]:
+        return redis.hgetall(f"link:{id}")
+
+    @staticmethod
+    def create_link(new_link: Link) -> Link:
         redis_pipeline = redis.pipeline()
         redis_pipeline.multi()
 
@@ -44,7 +48,7 @@ class Link:
         return new_link
 
     @staticmethod
-    def update_link(new_data: Link, id: str) -> dict[str, Any]:
+    def update_link(new_data: Link, id: str) -> Link:
         redis_pipeline = redis.pipeline()
         redis_pipeline.multi()
 
