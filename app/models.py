@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from time import time
 from typing import Any
 
 from app import redis
@@ -11,13 +12,13 @@ class Link:
     name: str
     description: str
     url: str
-    created_date: int
-    modified_date: int
+    created_date: int = int(time())
+    modified_date: int = int(time())
     id: int = 0
 
     @staticmethod
     def get_links() -> list[dict[str, Any]]:
-        link_ids = redis.zrevrange("posts", 0, -1)
+        link_ids = redis.zrevrange("links", 0, -1)
         links = []
 
         # get all data based on ids in reverse order
@@ -37,7 +38,7 @@ class Link:
         new_link.id = next_link_id
 
         redis_pipeline.hset(f"link:{next_link_id}", mapping=vars(new_link))
-        redis_pipeline.zadd("posts", {next_link_id, new_link.created_date})
+        redis_pipeline.zadd("links", {next_link_id: new_link.created_date})
         redis_pipeline.execute()
 
         return new_link
