@@ -2,6 +2,22 @@
 const submitNewBtn = document.querySelector('#button-new-submit');
 
 // Functions
+const hideAlert = () => {
+  const el = document.querySelector('.alert');
+
+  if (el) {
+    el.parentElement.removeChild(el);
+  }
+};
+
+const showAlert = (type, message, time = 7) => {
+  hideAlert();
+
+  const markup = `<div class='alert alert--${type}'>${message}</div>`;
+  document.querySelector('body').insertAdjacentHTML('afterbegin', markup);
+  window.setTimeout(hideAlert, time * 1000);
+};
+
 const submitNewForm = (e) => {
   e.preventDefault();
 
