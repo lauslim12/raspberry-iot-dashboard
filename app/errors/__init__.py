@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, render_template
 from redis import RedisError
 from werkzeug.exceptions import HTTPException
 
@@ -7,7 +7,7 @@ errors_blueprint = Blueprint("errors_blueprint", __name__)
 
 @errors_blueprint.app_errorhandler(404)
 def page_not_found(error):
-    pass
+    return render_template("404.html", title="Not Found"), 404
 
 
 @errors_blueprint.app_errorhandler(500)
