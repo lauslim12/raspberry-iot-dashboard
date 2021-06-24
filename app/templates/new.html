@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="section-new">
+    <form class="form">
+      <div class="section-new__greetings">
+        <h1 class="newdata-message">New Data</h1>
+        <h2 class="newdata-sub">
+          Please fill out this form for your new link to be processed in this IoT Dashboard!
+        </h2>
+        <h3 class="newdata-tertiary">
+          Click here to go
+          <a href="{{ url_for('views_blueprint.home') }}"
+            class="link-text"
+            rel="noopener noreferrer"
+          >
+            back!
+          </a>
+        </h3>
+      </div>
+
+      <div class="form__holder">
+        <label for="link_name" class="form__holder__label">Link Name</label>
+        <input id="link_name"
+          class="form__holder__input"
+          name="link_name"
+          type="text"
+          placeholder="GitHub"
+          required
+        />
+        <p class="form__holder__description">
+          Name of the website that you are going to save.
+        </p>
+      </div>
+
+      <div class="form__holder">
+        <label for="link_description" class="form__holder__label">Link Description</label>
+        <input id="link_description"
+          class="form__holder__input"
+          name="link_description"
+          type="text"
+          placeholder="Place for me to store my code"
+          required 
+        />
+        <p class="form__holder__description">
+          Description of your link/website.
+        </p>
+      </div>
+
+      <div class="form__holder">
+        <label for="link_url" class="form__holder__label">Link URL</label>
+        <input id="link_url"
+          class="form__holder__input"
+          name="link_url""
+          type="text"
+          placeholder="https://github.com/"
+          required 
+        />
+        <p class="form__holder__description">
+          The URL of your link.
+        </p>
+      </div>
+
+      <div class="form__holder__submit">
+        <button class="button" type="submit">Submit</button>
+      </div>
+    </form>
+  </section>
+{% endblock %}
