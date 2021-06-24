@@ -1,7 +1,51 @@
 {% extends "base.html" %}
 
+{% macro card() %}
+  <div class="dashboard__grid-item">
+    <h5 class="dashboard__grid-item__title">Minio</h5>
+
+    <p class="dashboard__grid-item__desc">
+      Minio is a dedicated storage server to store images. Minio is extremely fast,
+      S3-compatible, and is usually used by developers and non-developers.
+    </p>
+
+    <div class="dashboard__grid-item__actions">
+      <div class="dashboard__grid-item__actions-left">
+        <a class="link-text" href="#" rel="noopener noreferrer">
+          Visit
+        </a>
+      </div>
+
+      <div class="dashboard__grid-item__actions-right">
+        <a class="link-text" href="#" rel="noopener noreferrer">
+          Edit
+        </a>
+        <a class="link-text" href="#" rel="noopener noreferrer">
+          Delete
+        </a>
+      </div>
+    </div>
+  </div>
+{% endmacro %}
+
 {% block content %}
   <section class="section-main">
-    Hello there!
+    <div class="section-main__greetings">
+      <h1 class="welcome-message">
+        Welcome back, <span class="name-color">Nicholas!</span>
+      </h1>
+      <h2 class="welcome-message-sub">Raspberry Pi is ready!</h2>
+      <h3 class="welcome-message-tertiary">Hope you had a great day.</h3>
+    </div>
+
+    <div class="dashboard">
+      <h4 class="welcome-message-quartnernary">Check out your links that you added to your dashboard:</h4>
+
+      <div class="dashboard__grid">
+        {% for _ in range(10) %}
+          {{ card() }}
+        {% endfor %}
+      </div>
+    </div>
   </section>
 {% endblock %}

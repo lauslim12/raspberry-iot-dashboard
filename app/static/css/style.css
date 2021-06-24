@@ -1,0 +1,218 @@
+/* Abstracts */
+:root {
+  --color-primary-light: #a5dd72;
+  --color-primary-dark: #83c77c;
+
+  --color-secondary-light: #ff4b2b;
+  --color-secondary-dark: #ff416c;
+
+  --color-tertiary-light: #f5c042;
+  --color-tertiary-dark: #f8cc47;
+
+  --color-quarternary-light: #8f94fb;
+  --color-quarternary-dark: #4e54c8;
+
+  --color-grey-light-1: #f3f3f3;
+  --color-grey-light-2: #eee;
+
+  --color-grey-dark-1: #6d6d6d;
+  --color-grey-dark-2: #999;
+  --color-grey-dark-3: #333;
+
+  --shadow-dark: 0 2rem 6rem rgba(0, 0, 0, 0.15);
+  --shadow-light: 0 1rem 1rem rgba(0, 0, 0, .1);
+}
+
+/* Base */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; /* 1 rem = 10px */
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+
+  max-width: 1200px;
+  min-height: 100vh;
+
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+::selection {
+  background-color: var(--color-secondary-light);
+  color: #fff;
+}
+
+html::-webkit-scrollbar {
+  width: 5px;
+}
+
+html::-webkit-scrollbar-track {
+  background-color: var(--color-grey-light-1);
+}
+
+html::-webkit-scrollbar-thumb {
+  background-color: var(--color-secondary-light);
+}
+
+/* Typography */
+body {
+  font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
+.welcome-message {
+  font-size: 5rem;
+  color: var(--color-primary-dark);
+}
+
+.welcome-message-sub {
+  font-size: 3.5rem;
+  color: var(--color-secondary-dark);
+}
+
+.welcome-message-tertiary {
+  font-size: 2.25rem;
+}
+
+.welcome-message-quartnernary {
+  font-size: 2rem;
+}
+
+.name-color {
+  color: var(--color-quarternary-light);
+}
+
+.link-text {
+  color: var(--color-secondary-light);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+/* Components */
+.dashboard {
+  margin-top: 2rem;
+  font-size: 1.6rem;
+}
+
+.dashboard__grid {
+  margin-top: 2rem;
+
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  grid-auto-rows: 1fr;
+}
+
+.dashboard__grid-item {
+  display: flex;
+  flex-direction: column;
+
+  background: #fff;
+  color: #000;
+  box-shadow: var(--shadow-light);
+  border-radius: 10px;
+  padding: 2rem;
+  transition: all 0.2s ease;
+}
+
+.dashboard__grid-item:hover {
+  background: var(--color-quarternary-light);
+  color: #fff;
+}
+
+.dashboard__grid-item__title {
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+.dashboard__grid-item__desc {
+  margin-top: 2rem;
+}
+
+.dashboard__grid-item__actions {
+  margin-top: 2rem;
+  
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Layouts */
+body {
+  background-color: var(--color-grey-light-1);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.content {
+  flex: 1;
+
+  display: flex;
+  align-items: stretch;
+}
+
+.section-main {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.section-main__greetings {
+  margin-bottom: 5rem;
+}
+
+/* Media Queries */
+/* 1200px */
+@media only screen and (max-width: 75em) {
+}
+
+/* 1100px */
+@media only screen and (max-width: 69.75em) {
+}
+
+/* 900px */
+@media only screen and (max-width: 56.25em) {
+}
+
+/* 600px */
+@media only screen and (max-width: 37.5em) {
+  .dashboard__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .welcome-message {
+    font-size: 4rem;
+  }
+  
+  .welcome-message-sub {
+    font-size: 3rem;
+  }
+  
+  .welcome-message-tertiary {
+    font-size: 1.6rem;
+  }
+  
+  .welcome-message-quartnernary {
+    font-size: 1.4rem;
+  }
+
+  .dashboard__grid-item__desc {
+    font-size: 1.4rem;
+  }
+}
+
+/* 500px */
+@media only screen and (max-width: 31.25em) {
+}
