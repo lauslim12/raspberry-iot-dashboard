@@ -176,6 +176,12 @@ body {
   margin-bottom: 5rem;
 }
 
+.header {
+  text-align: right;
+  font-size: 1.4rem;
+  margin-bottom: 2rem;
+}
+
 .footer {
   margin-top: 2rem;
   font-size: 1.2rem;
@@ -226,4 +232,11 @@ body {
 
 /* 500px */
 @media only screen and (max-width: 31.25em) {
+  .welcome-message {
+    font-size: 3rem;
+  }
+
+  .welcome-message-sub {
+    font-size: 2.5rem;
+  }
 }
