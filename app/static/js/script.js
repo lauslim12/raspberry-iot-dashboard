@@ -1,6 +1,7 @@
 // DOM Elements
 const submitNewBtn = document.querySelector('#button-new-submit');
 const submitEditBtn = document.querySelector('#button-edit-submit');
+const deleteButtons = document.getElementsByClassName('button--delete');
 
 // Functions
 const hideAlert = () => {
@@ -96,6 +97,34 @@ const submitEditForm = (e) => {
     });
 };
 
+const deleteLink = (e, linkId) => {
+  e.preventDefault();
+
+  const options = {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  fetch(`/api/v1/links/${linkId}`, options)
+    .then((response) => {
+      if (!response.ok) {
+        throw Error('Failed to delete data! Please try again!');
+      }
+    })
+    .then(() => {
+      showAlert('success', 'You have deleted the data!');
+
+      window.setTimeout(() => {
+        location.replace('/');
+      }, 1500);
+    })
+    .catch((err) => {
+      showAlert('error', err.message);
+    });
+};
+
 // Delegations
 if (submitNewBtn) {
   submitNewBtn.addEventListener('click', (e) => submitNewForm(e));
@@ -103,4 +132,16 @@ if (submitNewBtn) {
 
 if (submitEditBtn) {
   submitEditBtn.addEventListener('click', (e) => submitEditForm(e));
+}
+
+if (deleteButtons) {
+  [...deleteButtons].forEach((el) =>
+    el.addEventListener('click', (e) => {
+      const linkId = e.target.dataset.linkid;
+
+      if (confirm('Are you sure to delete this link?')) {
+        deleteLink(e, linkId);
+      }
+    })
+  );
 }

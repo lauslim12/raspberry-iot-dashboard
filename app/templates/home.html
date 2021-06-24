@@ -19,7 +19,12 @@
         <a class="link-text" href="{{ url_for('views_blueprint.edit', id=link.id) }}" rel="noopener noreferrer">
           Edit
         </a>
-        <a class="link-text" href="#" rel="noopener noreferrer">
+        <a
+          class="button--delete link-text"
+          href="#"
+          rel="noopener noreferrer"
+          data-linkid="{{ link.id }}"
+        >
           Delete
         </a>
       </div>
