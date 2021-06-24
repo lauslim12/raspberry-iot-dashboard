@@ -1,6 +1,6 @@
 from operator import itemgetter
 
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, abort, jsonify, request
 from regex import IGNORECASE, compile, match
 
 from app.models import Link
@@ -37,10 +37,10 @@ def url_valid(url):
 @links_blueprint.route("/", methods=["POST"])
 def create_one_link():
     if not request_valid(request.json):
-        return jsonify(message="Invalid input!"), 400
+        abort(400, "You have inserted an invalid input!")
 
     if not url_valid(request.json.get("url")):
-        return jsonify(message="Invalid URL!"), 400
+        abort(400, "You have inserted an invalid URL!")
 
     # instantly map dictionary keys to class attributes
     new_link = Link.create_link(Link(**request.json))
@@ -53,13 +53,13 @@ def update_one_link(id):
     previous_link = Link.get_one_link(id)
 
     if not request_valid(request.json):
-        return jsonify(message="Invalid input!"), 400
+        abort(400, "You have inserted an invalid input!")
 
     if not previous_link:
-        return jsonify(message="No data with that ID!"), 400
+        abort(400, "There is no data with that identifier!")
 
     if not url_valid(request.json.get("url")):
-        return jsonify(message="Invalid URL!"), 400
+        abort(400, "You have inserted an invalid URL!")
 
     # destructuring, python way
     name, description, url = itemgetter("name", "description", "url")(request.json)
@@ -73,7 +73,7 @@ def update_one_link(id):
 @links_blueprint.route("/<id>", methods=["DELETE"])
 def delete_one_link(id):
     if not Link.get_one_link(id):
-        return jsonify(message="No data with that ID!"), 400
+        abort(400, "There is no data with that identifier!")
 
     Link.delete_link(id)
 
