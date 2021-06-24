@@ -14,12 +14,13 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
-    # Enter application context.
     with app.app_context():
         # Create components with our blueprints.
         from app.links import links_blueprint
+        from app.views import views_blueprint
 
         # Register our blueprints.
         app.register_blueprint(links_blueprint, url_prefix="/api/v1/links")
+        app.register_blueprint(views_blueprint)
 
     return app
