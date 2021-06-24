@@ -99,6 +99,10 @@ body {
   font-weight: 700;
 }
 
+.link-text:hover {
+  text-decoration: underline;
+}
+
 /* Components */
 .dashboard {
   margin-top: 2rem;
@@ -127,8 +131,7 @@ body {
 }
 
 .dashboard__grid-item:hover {
-  background: var(--color-quarternary-light);
-  color: #fff;
+  background: var(--color-tertiary-dark);
 }
 
 .dashboard__grid-item__title {
@@ -171,6 +174,14 @@ body {
 
 .section-main__greetings {
   margin-bottom: 5rem;
+}
+
+.footer {
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  text-align: right;
+  color: var(--color-quarternary-dark);
+  font-weight: 500;
 }
 
 /* Media Queries */
