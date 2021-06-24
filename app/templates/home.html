@@ -1,23 +1,22 @@
 {% extends "base.html" %}
 
-{% macro card() %}
+{% macro card(link="") %}
   <div class="dashboard__grid-item">
-    <h5 class="dashboard__grid-item__title">Minio</h5>
+    <h5 class="dashboard__grid-item__title">{{ link.name }}</h5>
 
     <p class="dashboard__grid-item__desc">
-      Minio is a dedicated storage server to store images. Minio is extremely fast,
-      S3-compatible, and is usually used by developers and non-developers.
+      {{ link.description }}
     </p>
 
     <div class="dashboard__grid-item__actions">
       <div class="dashboard__grid-item__actions-left">
-        <a class="link-text" href="#" rel="noopener noreferrer">
+        <a class="link-text" target="_blank" href="{{ link.url }}" rel="noopener noreferrer">
           Visit
         </a>
       </div>
 
       <div class="dashboard__grid-item__actions-right">
-        <a class="link-text" href="#" rel="noopener noreferrer">
+        <a class="link-text" href="{{ url_for('views_blueprint.edit', id=link.id) }}" rel="noopener noreferrer">
           Edit
         </a>
         <a class="link-text" href="#" rel="noopener noreferrer">
@@ -42,8 +41,8 @@
       <h4 class="welcome-message-quartnernary">Check out your links that you added to your dashboard:</h4>
 
       <div class="dashboard__grid">
-        {% for _ in range(10) %}
-          {{ card() }}
+        {% for link in links %}
+          {{ card(link) }}
         {% endfor %}
       </div>
     </div>
