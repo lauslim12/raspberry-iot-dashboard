@@ -49,7 +49,7 @@ def create_one_link():
     # instantly map dictionary keys to class attributes
     new_link = Link.create_link(Link(**request.json))
 
-    return jsonify(status="success", data=vars(new_link)), 200
+    return jsonify(status="success", data=vars(new_link)), 201
 
 
 @links_blueprint.route("/<id>", methods=["PATCH"])
