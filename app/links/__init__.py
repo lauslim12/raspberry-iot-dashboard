@@ -10,6 +10,10 @@ links_blueprint = Blueprint("links_blueprint", __name__)
 
 def request_valid(request_body):
     required_keys = {"name", "description", "url"}
+    name, description, url = itemgetter("name", "description", "url")(request_body)
+
+    if not name or not description or not url:
+        return False
 
     if all(key in request_body for key in required_keys):
         return True
@@ -37,7 +41,7 @@ def url_valid(url):
 @links_blueprint.route("/", methods=["POST"])
 def create_one_link():
     if not request_valid(request.json):
-        abort(400, "You have inserted an invalid input!")
+        abort(400, "You have inserted an invalid or empty input!")
 
     if not url_valid(request.json.get("url")):
         abort(400, "You have inserted an invalid URL!")
@@ -53,7 +57,7 @@ def update_one_link(id):
     previous_link = Link.get_one_link(id)
 
     if not request_valid(request.json):
-        abort(400, "You have inserted an invalid input!")
+        abort(400, "You have inserted an invalid or empty input!")
 
     if not previous_link:
         abort(400, "There is no data with that identifier!")
