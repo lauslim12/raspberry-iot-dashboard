@@ -39,8 +39,18 @@ const submitNewForm = (e) => {
 
   fetch('/api/v1/links/', options)
     .then((raw) => raw.json())
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err));
+    .then((res) => {
+      if (res.status === 'success') {
+        showAlert('success', 'You have added a new data!');
+
+        window.setTimeout(() => {
+          location.replace('/');
+        }, 1500);
+      }
+    })
+    .catch((err) => {
+      showAlert('error', err.message);
+    });
 };
 
 // Delegations
