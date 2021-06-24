@@ -107,6 +107,7 @@ body {
   color: var(--color-secondary-light);
   text-decoration: none;
   font-weight: 700;
+  font-size: inherit;
 }
 
 .link-text:hover {
@@ -268,6 +269,14 @@ body {
   margin-bottom: 2rem;
 }
 
+.header__link {
+  display: inline-block;
+}
+
+.header__link:not(:first-child) {
+  padding-left: 1rem;
+}
+
 .footer {
   margin-top: 2rem;
   font-size: 1.2rem;
@@ -332,5 +341,9 @@ body {
 
   .welcome-message-sub {
     font-size: 2.5rem;
+  }
+
+  .link-text {
+    font-size: 1.2rem;
   }
 }

@@ -1,3 +1,11 @@
-<a class="link-text" href="#" rel="noopener noreferrer">Home</a>
-<a class="link-text" href="#" rel="noopener noreferrer">New</a>
-<a class="link-text" href="#" rel="noopener noreferrer">Configurations</a>
+<div class="header__link">
+  <a class="link-text" href="{{ url_for('views_blueprint.home') }}" rel="noopener noreferrer">Home</a>
+</div>
+
+<div class="header__link">
+  <a class="link-text header__link" href="{{ url_for('views_blueprint.new') }}" rel="noopener noreferrer">New</a>
+</div>
+
+<div class="header__link">
+  <a class="link-text header__link" href="#" rel="noopener noreferrer">Configurations</a>
+</div>
