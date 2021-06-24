@@ -36,7 +36,7 @@
   <section class="section-main">
     <div class="section-main__greetings">
       <h1 class="welcome-message">
-        Welcome back, <span class="name-color">Nicholas!</span>
+        Welcome back, <span class="name-color">friend!</span>
       </h1>
       <h2 class="welcome-message-sub">Raspberry Pi is ready!</h2>
       <h3 class="welcome-message-tertiary">Hope you had a great day.</h3>
@@ -44,12 +44,15 @@
 
     <div class="dashboard">
       <h4 class="welcome-message-quartnernary">Check out your links that you added to your dashboard:</h4>
-
-      <div class="dashboard__grid">
-        {% for link in links %}
-          {{ card(link) }}
-        {% endfor %}
-      </div>
+      {% if links %}
+        <div class="dashboard__grid">
+          {% for link in links %}
+            {{ card(link) }}
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="no-data-message">You have no data inserted yet! Maybe add something new?</p>
+      {% endif %}
     </div>
   </section>
 {% endblock %}

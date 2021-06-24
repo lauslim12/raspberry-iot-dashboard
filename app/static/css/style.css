@@ -130,6 +130,14 @@ body {
   color: inherit;
 }
 
+.no-data-message {
+  margin-top: 2rem;
+  color: var(--color-secondary-dark);
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
 /* Components */
 .alert {
   position: fixed;
