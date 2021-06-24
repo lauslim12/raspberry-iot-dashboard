@@ -19,6 +19,16 @@ const showAlert = (type, message, time = 7) => {
   window.setTimeout(hideAlert, time * 1000);
 };
 
+const handleErrors = async (response) => {
+  if (!response.ok) {
+    const error = await response.json();
+
+    throw Error(error.message);
+  }
+
+  return await response.json();
+};
+
 const submitNewForm = (e) => {
   e.preventDefault();
 
@@ -39,15 +49,13 @@ const submitNewForm = (e) => {
   };
 
   fetch('/api/v1/links/', options)
-    .then((raw) => raw.json())
-    .then((res) => {
-      if (res.status === 'success') {
-        showAlert('success', 'You have added a new data!');
+    .then(handleErrors)
+    .then(() => {
+      showAlert('success', 'You have added a new data!');
 
-        window.setTimeout(() => {
-          location.replace('/');
-        }, 1500);
-      }
+      window.setTimeout(() => {
+        location.replace('/');
+      }, 1500);
     })
     .catch((err) => {
       showAlert('error', err.message);
@@ -75,15 +83,13 @@ const submitEditForm = (e) => {
   };
 
   fetch(`/api/v1/links/${linkId}`, options)
-    .then((raw) => raw.json())
-    .then((res) => {
-      if (res.status === 'success') {
-        showAlert('success', 'You have edited the data!');
+    .then(handleErrors)
+    .then(() => {
+      showAlert('success', 'You have edited the data!');
 
-        window.setTimeout(() => {
-          location.replace('/');
-        }, 1500);
-      }
+      window.setTimeout(() => {
+        location.replace('/');
+      }, 1500);
     })
     .catch((err) => {
       showAlert('error', err.message);
