@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="section-404">
+    <h1 class="section-404__main">500 Internal Error!</h1>
+    <h2 class="section-404__sub">{{ error_description }}</h2>
+
+    <button class="red-rounded-btn">
+      <a
+        href="{{ url_for('views_blueprint.home') }}"
+        class="plain-link"
+        rel="noopener noreferrer"
+      >
+        Back to Home
+      </a>
+    </button>
+  </section>
+{% endblock %}

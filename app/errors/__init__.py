@@ -11,8 +11,12 @@ def page_not_found(error):
 
 
 @errors_blueprint.app_errorhandler(500)
+@errors_blueprint.app_errorhandler(RedisError)
 def internal_server_error(error):
-    pass
+    return (
+        render_template("500.html", title="Internal Error", error_description=error),
+        500,
+    )
 
 
 @errors_blueprint.app_errorhandler(HTTPException)
@@ -20,15 +24,4 @@ def handle_custom_http_error(error):
     return (
         jsonify(status="fail", name=error.name, message=error.description),
         error.code,
-    )
-
-
-@errors_blueprint.app_errorhandler(RedisError)
-def handle_redis_exception(error):
-    return (
-        jsonify(
-            status="fail",
-            message="Our database has an internal error. Please try again later!",
-        ),
-        500,
     )
