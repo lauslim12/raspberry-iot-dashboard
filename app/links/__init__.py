@@ -26,18 +26,36 @@ def create_one_link():
     if not request_valid(request.json):
         return jsonify(message="Invalid input!"), 400
 
-    # destructuring, python way
-    name, description, url = itemgetter("name", "description", "url")(request.json)
-    new_link = Link.create_link(Link(name, description, url))
+    # instantly map dictionary keys to class attributes
+    new_link = Link.create_link(Link(**request.json))
 
-    return jsonify(status="success", data=new_link), 200
+    return jsonify(status="success", data=vars(new_link)), 200
 
 
 @links_blueprint.route("/<id>", methods=["PATCH"])
-def update_one_link():
-    pass
+def update_one_link(id):
+    previous_link = Link.get_one_link(id)
+
+    if not request_valid(request.json):
+        return jsonify(message="Invalid input!"), 400
+
+    if not previous_link:
+        return jsonify(message="No data with that ID!"), 400
+
+    # destructuring, python way
+    name, description, url = itemgetter("name", "description", "url")(request.json)
+    updated_link = Link.update_link(
+        Link(name, description, url, previous_link.get("created_date"), id=id), id
+    )
+
+    return jsonify(status="success", data=vars(updated_link)), 200
 
 
 @links_blueprint.route("/<id>", methods=["DELETE"])
-def delete_one_link():
-    pass
+def delete_one_link(id):
+    if not Link.get_one_link(id):
+        return jsonify(message="No data with that ID!"), 400
+
+    Link.delete_link(id)
+
+    return "", 204
