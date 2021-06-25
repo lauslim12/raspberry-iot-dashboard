@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, abort, render_template
 
 from app.models import Link
 
@@ -19,4 +19,8 @@ def new():
 @views_blueprint.route("/edit/<id>", methods=["GET"])
 def edit(id):
     link_to_edit = Link.get_one_link(id)
+
+    if not link_to_edit:
+        abort(404)
+
     return render_template("edit.html", title="Edit", link=link_to_edit), 200
