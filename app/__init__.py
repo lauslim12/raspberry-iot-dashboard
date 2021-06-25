@@ -26,7 +26,7 @@ def create_app(config_class=Config):
     compress.init_app(app)
     cors.init_app(app)
     limiter.init_app(app)
-    # talisman.init_app(app, content_security_policy=csp)
+    talisman.init_app(app, content_security_policy=csp, force_https=False)
 
     with app.app_context():
         # Create components with our blueprints.
