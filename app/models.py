@@ -18,7 +18,7 @@ class Link:
 
     @staticmethod
     def get_links() -> list[dict[str, Any]]:
-        link_ids = redis.zrevrange("links", 0, -1)
+        link_ids = redis.zrange("links", 0, -1)
         links = []
 
         # get all data based on ids in reverse order
