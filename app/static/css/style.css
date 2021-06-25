@@ -291,6 +291,12 @@ body {
   color: #000;
 }
 
+.spacer {
+  flex: 1;
+  justify-self: stretch;
+  align-self: stretch;
+}
+
 /* Layouts */
 body {
   background-color: var(--color-grey-light-1);
