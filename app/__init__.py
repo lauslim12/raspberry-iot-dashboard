@@ -2,6 +2,7 @@ from flask import Flask
 from redis import StrictRedis
 
 from app.config import REDIS_HOST, REDIS_PASSWORD, REDIS_PORT, Config
+from app.extensions import compress, cors, limiter, talisman
 
 # Initialize global database object.
 redis = StrictRedis(
@@ -13,6 +14,19 @@ def create_app(config_class=Config):
     # Initialize application.
     app = Flask(__name__)
     app.config.from_object(config_class)
+
+    # Setup Content Security Policy.
+    csp = {
+        "default-src": "'self'",
+        "font-src": ["'self'", "fonts.googleapis.com", "fonts.gstatic.com"],
+        "style-src-elem": ["'self'", "fonts.googleapis.com"],
+    }
+
+    # Setup global third-party middlewares with application factories.
+    compress.init_app(app)
+    cors.init_app(app)
+    limiter.init_app(app)
+    talisman.init_app(app, content_security_policy=csp)
 
     with app.app_context():
         # Create components with our blueprints.
