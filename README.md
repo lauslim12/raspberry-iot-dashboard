@@ -86,6 +86,7 @@ nano .env
 # take note of the output of 'pwd', if you are using python venv
 cd .venv/bin
 pwd
+deactivate
 
 # take note of the output of 'poetry env info --path', if you are using poetry
 poetry env info --path
@@ -154,12 +155,17 @@ ExecStart=/home/miyuki/raspberry-iot-dashboard/.venv/bin/gunicorn --workers 4 --
 WantedBy=multi-user.target
 ```
 
-- Start our service and we are going to ensure it starts on boot time.
+- Start our service.
 
 ```bash
 sudo systemctl start raspberry-iot-dashboard
-sudo systemctl enable raspberry-iot-dashboard
 sudo systemctl status raspberry-iot-dashboard
+```
+
+- We are going to ensure it starts on boot time.
+
+```bash
+sudo systemctl enable raspberry-iot-dashboard
 ```
 
 Your Gunicorn has now started successfully!
@@ -179,7 +185,7 @@ sudo apt install nginx
 
 ```bash
 hostname -I               # you will get an IP address
-curl http://192.168.1.6   # test your connection
+curl http://192.168.1.6   # test your connection according to the IP
 ```
 
 - Even though nginx came with default settings, its always better for us to improve upon the given settings. Here is my nginx setting. You can change this by using `sudo nano /etc/nginx/nginx.conf`.
@@ -295,6 +301,7 @@ server {
   # Server metadata.
   listen 80 default_server;
   listen [::]:80;
+  # server_name my-domain.com www.my-domain.com -- keep this commented
 
   # Add custom headers.
   add_header X-Raspberry-IoT-Dashboard 1.0.0;
@@ -330,6 +337,12 @@ sudo ln -s /etc/nginx/sites-available/raspberry-iot-dashboard /etc/nginx/sites-e
 ```bash
 sudo nginx -t
 sudo systemctl restart nginx
+```
+
+- Don't forget to have it run on boot.
+
+```bash
+sudo systemctl enable nginx
 ```
 
 You should now be able to connect to your Raspberry IoT Dashboard by opening your web browser and typing the local IP Address of your Pi. Ensure that both your Pi and your device are connected to the same network/Wi-Fi.
@@ -390,6 +403,7 @@ server {
   # Server metadata.
   listen 80 default_server;
   listen [::]:80;
+  # server_name my-domain.com www.my-domain.com -- keep this commented
 
   # Main entrypoint.
   location / {
@@ -462,9 +476,16 @@ disown %<YOUR_JOB_NUMBER> # keep the '%' char, this is to disown the process so 
 
 And it's done!
 
+## Updates
+
+Some notes to keep in mind:
+
+- If you want to update dependencies, use `poetry update`.
+- If you have just updated the website, restart service by using `sudo systemctl restart raspberry-iot-dashboard`.
+
 ## Cleaning Up
 
-To clear up any build artifacts during deployment, use this command.
+To clear up any build artifacts during development or deployment, use this command.
 
 ```bash
 find . | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf
@@ -480,5 +501,13 @@ This application is licensed under MIT License. Feel free to check `LICENSE` fil
 
 ## References
 
-- [Deploy Flask with Gunicorn and Nginx](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-18-04)
+Here are the references that I use to make this project.
+
 - [Installing Redis on Raspberry Pi](https://lindevs.com/install-redis-from-source-code-on-raspberry-pi/)
+- [Configurations for Nginx](https://www.e-tinkers.com/2018/08/how-to-properly-host-flask-application-with-nginx-and-guincorn/)
+- [Gunicorn Recommended Deploying Guidelines](https://docs.gunicorn.org/en/stable/deploy.html)
+- [Build Private Cloud on Raspberry Pi with Minio](https://www.linkedin.com/pulse/build-your-own-private-cloud-home-raspberry-pi-minio-huerta-arias/)
+- [DigitalOcean - Deploy Flask with Gunicorn and Nginx](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-18-04)
+- [DigitalOcean - How to Setup Nginx](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04)
+- [DigitalOcean - How to Setup Redis](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-20-04)
+- [DigitalOcean - How to Setup Minio](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-object-storage-server-using-minio-on-ubuntu-18-04)
