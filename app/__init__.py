@@ -32,10 +32,12 @@ def create_app(config_class=Config):
         # Create components with our blueprints.
         from app.errors import errors_blueprint
         from app.links import links_blueprint
+        from app.utils import utils_blueprint
         from app.views import views_blueprint
 
         # Register our blueprints.
         app.register_blueprint(links_blueprint, url_prefix="/api/v1/links")
+        app.register_blueprint(utils_blueprint, url_prefix="/api/v1/")
         app.register_blueprint(views_blueprint)
 
         # Register our global error handling blueprint.
