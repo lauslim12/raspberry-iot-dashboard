@@ -67,18 +67,31 @@ def update_one_link(id):
 
     # destructuring, python way
     name, description, url = itemgetter("name", "description", "url")(request.json)
-    updated_link = Link.update_link(
-        Link(name, description, url, previous_link.get("created_date"), id=id), id
-    )
+
+    # manually create dictionary for updating link
+    update_link = {
+        "name": name,
+        "description": description,
+        "url": url,
+        "created_date": previous_link.get("created_date"),
+        "id": id,
+    }
+
+    # update link
+    updated_link = Link.update_link(Link(**update_link), id)
 
     return jsonify(status="success", data=vars(updated_link)), 200
 
 
 @links_blueprint.route("/<id>", methods=["DELETE"])
 def delete_one_link(id):
-    if not Link.get_one_link(id):
+    previous_link = Link.get_one_link(id)
+
+    if not previous_link:
         abort(400, "There is no data with that identifier!")
 
+    # delete link
     Link.delete_link(id)
 
+    # return 204 no content
     return "", 204
