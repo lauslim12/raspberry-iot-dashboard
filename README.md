@@ -73,7 +73,7 @@ poetry shell
 poetry install
 ```
 
-- Prepare your environment variables and fill it according to the example. If you're using defaults, I don't think you need to change the environment variable, but you have to include it (`.env` file) in the project.
+- Prepare your environment variables and fill it according to the example. If you're using the default settings, I don't think you need to change the environment variable, but you have to include it (`.env` file) in the project.
 
 ```bash
 mv .env.example .env
@@ -92,6 +92,28 @@ deactivate
 poetry env info --path
 exit
 ```
+
+- If you want to try test running the application in development mode, you may use the following command. Open it in `localhost:5000`.
+
+```bash
+# normal way
+flask run
+
+# i personally prefer the following
+FLASK_ENV=development flask run
+
+# or if you want to simulate production
+FLASK_ENV=production gunicorn --workers 2 wsgi:app
+```
+
+- In case you want to try to run this with Docker, you can do the following commands.
+
+```bash
+docker build -t raspberry-iot-dashboard:latest
+docker run -p 5000:5000 -d raspberry-iot-dashboard:latest
+```
+
+- Note that you may have to set environment files, especially if you want the Redis functionality to work.
 
 ### Setup Redis
 
