@@ -2,7 +2,7 @@ from flask import Flask
 from redis import StrictRedis
 
 from app.config import REDIS_HOST, REDIS_PASSWORD, REDIS_PORT, Config
-from app.extensions import compress, cors, limiter, talisman
+from app.extensions import cors, limiter, talisman
 
 # Initialize global database object.
 redis = StrictRedis(
@@ -23,7 +23,6 @@ def create_app(config_class=Config):
     }
 
     # Setup global third-party middlewares with application factories.
-    compress.init_app(app)
     cors.init_app(app)
     limiter.init_app(app)
     talisman.init_app(app, content_security_policy=csp, force_https=False)
