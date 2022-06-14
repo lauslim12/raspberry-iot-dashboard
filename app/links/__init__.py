@@ -1,7 +1,7 @@
 from operator import itemgetter
+from re import IGNORECASE, compile, match
 
 from flask import Blueprint, abort, jsonify, request
-from regex import IGNORECASE, compile, match
 
 from app.models import Link
 
